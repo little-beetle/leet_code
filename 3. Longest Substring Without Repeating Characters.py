@@ -1,27 +1,24 @@
-class Solution(object):
-    def lengthOfLongestSubstring(self, s):
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
         """
         :type s: str
         :rtype: int
         """
 
-        answer_list = []
-        max_len = 0
+        n = len(s)
+        maxLength = 0
+        charSet = set()
+        left = 0
 
-        for i in s:
-            if i not in answer_list:
-                answer_list.append(i)
-                if len(answer_list) > max_len:
-                    max_len = len(answer_list)
+        for right in range(n):
+            if s[right] not in charSet:
+                charSet.add(s[right])
+                maxLength = max(maxLength, right - left + 1)
             else:
-                answer_list = [i]
+                while s[right] in charSet:
+                    charSet.remove(s[left])
+                    left += 1
+                charSet.add(s[right])
 
-        return max_len
-
-
-ss = Solution()
-
-s = "dvdf"
-
-print(ss.lengthOfLongestSubstring(s))
+        return maxLength
 # Output: 3
